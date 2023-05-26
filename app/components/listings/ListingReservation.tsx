@@ -2,7 +2,7 @@
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { SafeUser } from "@/app/types";
-import { Reservation } from "@prisma/client";
+import { Listing, Reservation } from "@prisma/client";
 import axios from "axios";
 import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,9 @@ import Calendar from "../inputs/Calendar";
 import Button from "../Button";
 
 interface ListingReservationProps {
-  reservations: Reservation[];
+  reservations: (Reservation & {
+    listing: Listing;
+  })[];
   initialPrice: number;
   currentUser?: SafeUser | null;
   listingId: string;
@@ -108,7 +110,11 @@ const ListingReservation: React.FC<ListingReservationProps> = ({
       />
       <hr />
       <div className="p-4">
-        <Button disabled={isLoading} label="Reserve" onClick={() => {}} />
+        <Button
+          disabled={isLoading}
+          label="Reserve"
+          onClick={onCreateReservation}
+        />
       </div>
       <div className="p-4 flex items-center justify-between font-semibold text-lg">
         <div>Total</div>

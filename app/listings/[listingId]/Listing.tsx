@@ -7,7 +7,9 @@ import { Listing, Reservation, User } from "@prisma/client";
 import React from "react";
 
 interface ListingProps {
-  reservations?: Reservation[];
+  reservations?: (Reservation & {
+    listing: Listing;
+  })[];
   listing: Listing & { user: User };
   currentUser?: SafeUser | null;
 }
